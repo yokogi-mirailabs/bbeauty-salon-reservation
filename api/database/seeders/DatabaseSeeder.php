@@ -21,6 +21,10 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call([
             AdminSeeder::class,
+            ShopSeeder::class,
+            MenuSeeder::class,
+            StylistSeeder::class,
+            ReservationSeeder::class,
         ]);
     }
 }

@@ -10,10 +10,16 @@ import { Link } from '@inertiajs/vue3';
 const showingNavigationDropdown = ref(false);
 const routes = [
     {
-        name: '店舗新規登録',
+        name: 'メニュー',
     },
     {
-        name: '店舗一覧',
+        name: 'スタイリスト',
+    },
+    {
+        name: '顧客',
+    },
+    {
+        name: '分析',
     },
 ]
 </script>
