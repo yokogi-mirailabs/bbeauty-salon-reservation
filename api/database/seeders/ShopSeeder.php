@@ -14,7 +14,7 @@ class ShopSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = Admin::factory()->create();
+        $admin = Admin::first();
         $shop = Shop::factory()->create([
             'admin_id' => $admin->id,
         ]);

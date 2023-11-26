@@ -1,35 +1,29 @@
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
 
-const showingNavigationDropdown = ref(false);
 const routes = [
     {
-        name: '店舗新規登録',
+        name: '店舗一覧',
+        path: route('admin.shop.index'),
     },
     {
-        name: '店舗一覧',
+        name: '店舗新規登録',
+        path: route('admin.shop.create'),
     },
 ]
 </script>
 
 <template>
 <v-app>
-    <v-app-bar color="pink-lighten-4">
+    <v-app-bar color="pink-lighten-5">
     <v-app-bar-title>
         Application Bar
     </v-app-bar-title>
     </v-app-bar>
 
     <v-navigation-drawer permanent>
-        <v-list-item title="My Application" subtitle="Vuetify"></v-list-item>
         <v-divider></v-divider>
-        <v-list-item v-for="(route, index) in routes" link :title=route.name></v-list-item>
+        <v-list-item v-for="(route, index) in routes" :key="route.name" link :title="route.name" :href="route.path" />
     </v-navigation-drawer>
 
     <v-main>
