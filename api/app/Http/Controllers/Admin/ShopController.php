@@ -30,7 +30,7 @@ class ShopController extends Controller
     {
         return DB::transaction(function () use ($request) {
             $shop = $request->user()->shops()->create($request->validated());
-            return redirect()->route('admin.shop.index');
+            return redirect()->route('admin.shops.index');
         });
     }
 
@@ -43,7 +43,7 @@ class ShopController extends Controller
     {
         return DB::transaction(function () use ($request, $shop) {
             $shop->update($request->validated());
-            return redirect()->route('admin.shop.index');
+            return redirect()->route('admin.shops.index');
         });
     }
 
@@ -51,7 +51,7 @@ class ShopController extends Controller
     {
         return DB::transaction(function () use ($request, $shop) {
             $shop->delete();
-            return redirect()->route('admin.shop.index');
+            return redirect()->route('admin.shops.index');
         });
     }
 }

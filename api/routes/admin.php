@@ -46,9 +46,11 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
                 ->name('logout');
 
     // 追加ルートがある場合は上に定義する
-    Route::resource('shop', ShopController::class);
-    Route::resource('menus', MenuController::class);
-    Route::resource('stylist', StylistController::class);
-    Route::resource('payment_history', PaymentHistoryController::class);
-    Route::resource('reservation', ReservationController::class);
+    Route::resource('shops', ShopController::class);
+    Route::prefix('shops/{shop}')->group(function () {
+        Route::resource('menus', MenuController::class);
+        Route::resource('stylists', StylistController::class);
+        Route::resource('payment_histories', PaymentHistoryController::class);
+        Route::resource('reservations', ReservationController::class);
+    });
 });

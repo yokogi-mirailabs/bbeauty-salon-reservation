@@ -4,11 +4,11 @@ import { ref } from 'vue';
 const routes = [
     {
         name: '店舗一覧',
-        path: route('admin.shop.index'),
+        path: route('admin.shops.index'),
     },
     {
         name: '店舗新規登録',
-        path: route('admin.shop.create'),
+        path: route('admin.shops.create'),
     },
 ]
 </script>

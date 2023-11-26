@@ -1,52 +1,51 @@
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
 
-const showingNavigationDropdown = ref(false);
+const shopId = ref(sessionStorage.getItem('shopId'));
+
 const routes = [
     {
-        name: 'メニュー',
+        name: 'メニュー一覧',
+        path: route('admin.menus.index', { shop: shopId.value }),
     },
     {
-        name: 'スタイリスト',
+        name: 'スタイリスト一覧',
+        path: route('admin.stylists.index', { shop: shopId.value }),
     },
     {
-        name: '顧客',
+        name: '顧客一覧',
+        // path: route('admin.shops.create'),
     },
     {
         name: '分析',
+        // path: route('admin.shops.create'),
     },
 ]
 </script>
 
 <template>
-<v-app>
-    <v-app-bar color="pink-lighten-4">
-    <v-app-bar-title>
-        Application Bar
-    </v-app-bar-title>
-    </v-app-bar>
+    <v-app>
+        <v-app-bar color="pink-lighten-5">
+        <v-app-bar-title>
+            Application Bar
+        </v-app-bar-title>
+        </v-app-bar>
 
-    <v-navigation-drawer permanent>
-        <v-list-item title="My Application" subtitle="Vuetify"></v-list-item>
-        <v-divider></v-divider>
-        <v-list-item v-for="(route, index) in routes" link :title=route.name></v-list-item>
-    </v-navigation-drawer>
+        <v-navigation-drawer permanent>
+            <v-list-item title="My Application" subtitle="Vuetify"></v-list-item>
+            <v-divider></v-divider>
+            <v-list-item v-for="(route, index) in routes" link :title=route.name></v-list-item>
+        </v-navigation-drawer>
 
-    <v-main>
-    <v-container>
-        <slot />
-    </v-container>
-    </v-main>
+        <v-main>
+        <v-container>
+            <slot />
+        </v-container>
+        </v-main>
 
-    <v-bottom-navigation>
-    Button Navigation
-    </v-bottom-navigation>
+        <v-bottom-navigation>
+        Button Navigation
+        </v-bottom-navigation>
 
-</v-app>
+    </v-app>
 </template>

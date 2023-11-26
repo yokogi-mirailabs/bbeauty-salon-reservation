@@ -39,7 +39,7 @@ const form = useForm({
     description: props.shop.description,
 });
 const submit = () => {
-    form.put(route('admin.shop.update', {'shop': props.shop.id}), {
+    form.put(route('admin.shops.update', {'shop': props.shop.id}), {
         onSuccess: () => {
             flashMessage('店舗を更新しました。', 'success')
         },

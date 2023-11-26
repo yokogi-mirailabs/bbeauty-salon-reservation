@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/Admin/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, Link } from '@inertiajs/vue3';
 import { mdiPencil } from '@mdi/js'
 import ConfirmModal from '@/Components/ConfirmModal.vue';
 import flashMessage from '@/Utils/flashMessage';
@@ -14,7 +14,7 @@ const props = defineProps({
 const form = useForm({});
 
 const deleteShop = (shopId) => {
-    form.delete(route('admin.shop.destroy', {'shop': shopId}), {
+    form.delete(route('admin.shops.destroy', {'shop': shopId}), {
         onSuccess: () => {
             flashMessage('店舗を削除しました。', 'success')
         },
@@ -33,14 +33,14 @@ const deleteShop = (shopId) => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">店舗一覧</h2>
         </template>
 
-        <v-card v-for="(shop, index) in props.shops" :key="shop.id" outlined class="mb-3">
+        <v-card v-for="(shop, index) in props.shops" :key="shop.id" elevation="3" class="mb-3">
             <v-card-text>
                 <v-row>
                     <v-col class="text-right">
                         <v-btn
                             variant="text"
                             :icon="mdiPencil"
-                            :href="route('admin.shop.edit', { shop: shop.id })"
+                            :href="route('admin.shops.edit', { shop: shop.id })"
                             >
                         </v-btn>
                         <ConfirmModal
@@ -89,6 +89,14 @@ const deleteShop = (shopId) => {
                         <div class="text-subtitle-1">{{ shop.description }}</div>
                     </v-col>
                 </v-row>
+                <v-btn
+                    :href="route('admin.menus.index', { shop: shop.id })"
+                    color="deep-purple-lighten-2"
+                    type="submit"
+                    class="mt-12"
+                    block
+                    >メニュー、スタイリストを設定する
+                </v-btn>
             </v-card-text>
         </v-card>
     </AuthenticatedLayout>

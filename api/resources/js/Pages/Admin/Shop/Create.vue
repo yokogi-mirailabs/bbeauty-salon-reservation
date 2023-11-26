@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/Admin/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, Link } from '@inertiajs/vue3';
 import flashMessage from '@/Utils/flashMessage';
 
 const rules = {
@@ -34,7 +34,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('admin.shop.store'), {
+    form.post(route('admin.shops.store'), {
         onSuccess: () => {
             flashMessage('店舗を作成しました。', 'success')
         },
