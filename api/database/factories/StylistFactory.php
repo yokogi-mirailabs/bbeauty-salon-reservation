@@ -22,8 +22,8 @@ class StylistFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->realText(50),
             // enum
-            'post' => $post,
-            'specialty' => fake()->realText(10),
+            'job_post' => $post,
+            'speciality' => fake()->realText(10),
             'working_year' => fake()->numberBetween(1, 10),
         ];
     }

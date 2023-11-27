@@ -19,8 +19,8 @@ return new class extends Migration
                 ->onDelete('cascade');
             $table->string('name')->unique()->comment('スタイリスト名');
             $table->string('description')->comment('スタイリストの説明');
-            $table->string('post')->comment('役職');
-            $table->string('specialty')->comment('得意なスタイル');
+            $table->string('job_post')->comment('役職');
+            $table->string('speciality')->comment('得意なスタイル');
             $table->integer('working_year')->comment('何年目か');
             $table->softDeletesDatetime();
             $table->datetimes();

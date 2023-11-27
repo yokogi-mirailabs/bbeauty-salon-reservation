@@ -17,6 +17,10 @@ const rules = {
     ],
     price: [
         value => !!value || '価格は必須項目です。',
+        value => {
+            const pattern = /^([1-9]\d*|0)$/
+            return pattern.test(value) || '数値を入力してください。'
+        },
     ],
 }
 const form = useForm({

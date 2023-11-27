@@ -27,24 +27,24 @@ class StylistSeeder extends Seeder
             })
             ->createMany([
                 [
-                    'post' => 0,
-                    'specialty' => 'カラー',
+                    'job_post' => 0,
+                    'speciality' => 'カラー',
                 ],
                 [
-                    'post' => 0,
-                    'specialty' => 'パーマ',
+                    'job_post' => 0,
+                    'speciality' => 'パーマ',
                 ],
                 [
-                    'post' => 0,
-                    'specialty' => '縮毛矯正',
+                    'job_post' => 0,
+                    'speciality' => '縮毛矯正',
                 ],
                 [
-                    'post' => 1,
-                    'specialty' => 'トリートメント',
+                    'job_post' => 1,
+                    'speciality' => 'トリートメント',
                 ],
                 [
-                    'post' => 2,
-                    'specialty' => 'ヘッドスパ',
+                    'job_post' => 2,
+                    'speciality' => 'ヘッドスパ',
                 ],
             ]);
     }

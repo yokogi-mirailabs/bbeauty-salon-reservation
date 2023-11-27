@@ -5,9 +5,14 @@ import { mdiPencil, mdiPlus } from '@mdi/js'
 import ConfirmModal from '@/Components/ConfirmModal.vue';
 import flashMessage from '@/Utils/flashMessage';
 import { onBeforeMount } from 'vue';
+import { STYLIST_POST_TYPE, STYLIST_POST_TYPE_TEXT } from '@/Consts/stylistPostType';
 
 const props = defineProps({
-    menus: {
+    stylist: {
+        type: Object,
+        required: true,
+    },
+    reservations: {
         type: Array,
         required: true,
     },
@@ -22,13 +27,13 @@ onBeforeMount(() => {
 });
 const form = useForm({});
 
-const deleteMenu = (menuId) => {
-    form.delete(route('admin.menus.destroy', {
+const deleteStylist = (stylistId) => {
+    form.delete(route('admin.stylists.destroy', {
         'shop': shopId,
-        'menu': menuId,
+        'stylist': stylistId,
     }), {
         onSuccess: () => {
-            flashMessage('メニューを削除しました。', 'success')
+            flashMessage('スタイリストを削除しました。', 'success')
         },
         onError: (e) => {
             flashMessage('削除に失敗しました。再度お試しください。', 'error')
@@ -38,21 +43,21 @@ const deleteMenu = (menuId) => {
 </script>
 
 <template>
-    <Head title="メニュー一覧" />
+    <Head title="スタイリスト一覧" />
 
     <AuthenticatedShopDetailLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">メニュー一覧</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">スタイリスト一覧</h2>
         </template>
 
-        <v-card v-for="(menu, index) in props.menus" :key="menu.id" elevation="3" class="mb-3">
+        <v-card elevation="3" class="mb-3">
             <v-card-text>
                 <v-row>
                     <v-col class="text-right">
                         <v-btn
                             variant="text"
                             :icon="mdiPlus"
-                            :href="route('admin.menus.create', {
+                            :href="route('admin.stylists.create', {
                                 shop: shopId,
                             })"
                             >
@@ -60,34 +65,37 @@ const deleteMenu = (menuId) => {
                         <v-btn
                             variant="text"
                             :icon="mdiPencil"
-                            :href="route('admin.menus.edit', {
+                            :href="route('admin.stylists.edit', {
                                 shop: shopId,
-                                menu: menu.id
+                                stylist: stylist.id
                             })"
                             >
                         </v-btn>
                         <ConfirmModal
-                            @delete:model-value="deleteMenu(menu.id)"
-                            :model-value="'メニュー'"
+                            @delete:model-value="deleteStylist(stylist.id)"
+                            :model-value="'スタイリスト'"
                             />
                     </v-col>
                 </v-row>
                 <v-row>
                     <v-col cols="4">
-                        <v-list-subheader>メニュー名</v-list-subheader>
+                        <v-list-subheader>スタイリスト名</v-list-subheader>
                     </v-col>
                     <v-col cols="8">
-                        <div class="text-subtitle-1">{{ menu.name }}</div>
+                        <div class="text-subtitle-1">{{ stylist.name }}</div>
                     </v-col>
                 </v-row>
-                <v-row>
-                    <v-col cols="4">
-                        <v-list-subheader>価格</v-list-subheader>
-                    </v-col>
-                    <v-col cols="8">
-                        <div class="text-subtitle-1">{{ menu.price }}</div>
-                    </v-col>
-                </v-row>
+                <v-btn
+                    :href="route('admin.stylists.show', {
+                        shop: shopId,
+                        stylist: stylist.id,
+                    })"
+                    color="deep-purple-lighten-2"
+                    type="submit"
+                    class="mt-12"
+                    block
+                    >スタイリスト予定確認
+                </v-btn>
             </v-card-text>
         </v-card>
     </AuthenticatedShopDetailLayout>

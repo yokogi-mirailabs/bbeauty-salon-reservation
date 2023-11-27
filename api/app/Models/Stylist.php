@@ -20,14 +20,14 @@ class Stylist extends Model
         'shop_id',
         'name',
         'description',
-        'post',
-        'specialty',
+        'job_post',
+        'speciality',
         'working_year'
     ];
 
     protected $casts = [
         'shop_id' => 'integer',
-        'post' => JobPostType::class,
+        'job_post' => JobPostType::class,
     ];
 
     public function shop()

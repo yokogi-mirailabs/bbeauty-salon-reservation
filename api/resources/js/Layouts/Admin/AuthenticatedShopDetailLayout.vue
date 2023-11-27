@@ -34,7 +34,7 @@ const routes = [
         <v-navigation-drawer permanent>
             <v-list-item title="My Application" subtitle="Vuetify"></v-list-item>
             <v-divider></v-divider>
-            <v-list-item v-for="(route, index) in routes" link :title=route.name></v-list-item>
+            <v-list-item v-for="(route, index) in routes" link :title=route.name :href="route.path"></v-list-item>
         </v-navigation-drawer>
 
         <v-main>

@@ -3,20 +3,22 @@
 namespace App\Policies;
 
 use App\Models\Admin;
-use App\Models\Menu;
+use App\Models\Stylist;
 use App\Models\Shop;
 use Illuminate\Support\Facades\Auth;
 
-class MenuPolicy
+class StylistPolicy
 {
     public function viewAny(Admin $admin): bool
     {
         return Auth::guard('admin')->check();
     }
 
-    public function view(Admin $admin): bool
+    public function view(Admin $admin, Stylist $stylist, Shop $shop): bool
     {
-        return Auth::guard('admin')->check();
+        return Auth::guard('admin')->check()
+            && $admin->id === $shop->admin_id
+            && $stylist->shop_id === $shop->id;
     }
 
     public function create(Admin $admin): bool
@@ -24,17 +26,17 @@ class MenuPolicy
         return Auth::guard('admin')->check();
     }
 
-    public function update(Admin $admin, Menu $menu, Shop $shop): bool
+    public function update(Admin $admin, Stylist $stylist, Shop $shop): bool
     {
         return Auth::guard('admin')->check()
             && $admin->id === $shop->admin_id
-            && $menu->shop_id === $shop->id;
+            && $stylist->shop_id === $shop->id;
     }
 
-    public function delete(Admin $admin, Menu $menu, Shop $shop): bool
+    public function delete(Admin $admin, Stylist $stylist, Shop $shop): bool
     {
         return Auth::guard('admin')->check()
             && $admin->id === $shop->admin_id
-            && $menu->shop_id === $shop->id;
+            && $stylist->shop_id === $shop->id;
     }
 }
