@@ -6,6 +6,7 @@ import ConfirmModal from '@/Components/ConfirmModal.vue';
 import flashMessage from '@/Utils/flashMessage';
 import { onBeforeMount } from 'vue';
 import { STYLIST_POST_TYPE, STYLIST_POST_TYPE_TEXT } from '@/Consts/stylistPostType';
+import FullCalendar from '@/Components/Calendar.vue';
 
 const props = defineProps({
     stylist: {
@@ -22,9 +23,7 @@ const props = defineProps({
     },
 });
 const shopId = props.routeParams.parameters.shop;
-onBeforeMount(() => {
-    sessionStorage.setItem('shopId', shopId);
-});
+
 const form = useForm({});
 
 const deleteStylist = (stylistId) => {
@@ -52,50 +51,10 @@ const deleteStylist = (stylistId) => {
 
         <v-card elevation="3" class="mb-3">
             <v-card-text>
-                <v-row>
-                    <v-col class="text-right">
-                        <v-btn
-                            variant="text"
-                            :icon="mdiPlus"
-                            :href="route('admin.stylists.create', {
-                                shop: shopId,
-                            })"
-                            >
-                        </v-btn>
-                        <v-btn
-                            variant="text"
-                            :icon="mdiPencil"
-                            :href="route('admin.stylists.edit', {
-                                shop: shopId,
-                                stylist: stylist.id
-                            })"
-                            >
-                        </v-btn>
-                        <ConfirmModal
-                            @delete:model-value="deleteStylist(stylist.id)"
-                            :model-value="'スタイリスト'"
-                            />
-                    </v-col>
-                </v-row>
-                <v-row>
-                    <v-col cols="4">
-                        <v-list-subheader>スタイリスト名</v-list-subheader>
-                    </v-col>
-                    <v-col cols="8">
-                        <div class="text-subtitle-1">{{ stylist.name }}</div>
-                    </v-col>
-                </v-row>
-                <v-btn
-                    :href="route('admin.stylists.show', {
-                        shop: shopId,
-                        stylist: stylist.id,
-                    })"
-                    color="deep-purple-lighten-2"
-                    type="submit"
-                    class="mt-12"
-                    block
-                    >スタイリスト予定確認
-                </v-btn>
+                <FullCalendar
+                    :reservations="props.reservations"
+                    :isAdmin="true"
+                />
             </v-card-text>
         </v-card>
     </AuthenticatedShopDetailLayout>

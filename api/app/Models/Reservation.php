@@ -20,7 +20,7 @@ class Reservation extends Model
         'stylist_id',
         'shop_id',
         'date',
-        'time',
+        'start_time_type',
     ];
 
     protected $casts = [
@@ -28,7 +28,7 @@ class Reservation extends Model
         'stylist_id' => 'integer',
         'shop_id' => 'integer',
         'date' => 'datetime:Y-m-d',
-        'time' => ReservationTimeType::class,
+        'start_time_type' => ReservationTimeType::class,
     ];
 
     public function stylist(): BelongsTo

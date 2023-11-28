@@ -25,8 +25,8 @@ return new class extends Migration
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->datetime('date')->comment('何年何月何日の予約か');
-            $table->tinyInteger('time')->comment('何時の予約か');
+            $table->date('date')->comment('何年何月何日の予約か');
+            $table->tinyInteger('start_time_type')->comment('何時の予約か');
             $table->softDeletesDatetime();
             $table->datetimes();
         });

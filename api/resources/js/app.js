@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
 import vuetify from "./vuetify";
+import dayjs from 'dayjs'
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -19,6 +20,7 @@ createInertiaApp({
             .use(plugin)
             .use(vuetify)
             .use(Vue3Toasity)
+            .use(dayjs)
             .use(ZiggyVue, Ziggy)
             .mount(el);
     },

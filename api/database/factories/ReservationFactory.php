@@ -19,7 +19,7 @@ class ReservationFactory extends Factory
         return [
             'date' => fake()->date(),
             // enumで取得するため、0~4の数字をランダムで取得
-            'time' => fake()->numberBetween(0, 4),
+            'start_time_type' => fake()->numberBetween(0, 4),
         ];
     }
 }

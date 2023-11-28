@@ -10,6 +10,8 @@ use App\Models\Shop;
 use App\Models\Stylist;
 use App\Models\Menu;
 use App\Models\Reservation;
+use App\Models\PaymentHistory;
+use App\Models\User;
 use App\Http\Requests\Admin\Stylist\StoreStylistRequest;
 use App\Http\Requests\Admin\Stylist\UpdateStylistRequest;
 use App\Http\Requests\Admin\Stylist\DestroyStylistRequest;
@@ -27,7 +29,9 @@ class StylistController extends Controller
     public function show(Request $request, Shop $shop, Stylist $stylist)
     {
         $this->authorize('view', [$stylist, $shop]);
-        $reservations = Reservation::where('stylist_id', $stylist->id)->get();
+        $reservations = Reservation::with(['paymentHistories.menu', 'user'])
+            ->where('stylist_id', $stylist->id)
+            ->get();
         return Inertia::render('Admin/Shop/Stylist/Show', compact('stylist', 'reservations'));
     }
 
