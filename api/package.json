@@ -7,6 +7,7 @@
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
+        "@mdi/js": "^7.3.67",
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-vue": "^4.5.0",
         "autoprefixer": "^10.4.12",
@@ -18,6 +19,14 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
+        "@fullcalendar/core": "^6.1.9",
+        "@fullcalendar/daygrid": "^6.1.9",
+        "@fullcalendar/interaction": "^6.1.9",
+        "@fullcalendar/timegrid": "^6.1.9",
+        "@fullcalendar/vue3": "^6.1.9",
+        "dayjs": "^1.11.10",
+        "vue-toast-notification": "^3.1.2",
+        "vue3-toastify": "^0.1.14",
         "vuetify": "^3.4.2"
     }
 }
