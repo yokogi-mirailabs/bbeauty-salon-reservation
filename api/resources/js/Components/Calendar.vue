@@ -1,11 +1,12 @@
 <script setup>
 import FullCalendar from '@fullcalendar/vue3'
-import { useForm } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { ref, onBeforeMount, computed } from 'vue'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayjs from "dayjs";
+import flashMessage from '@/Utils/flashMessage';
 import { START_TIME_TYPE, START_TIME_TYPE_TEXT } from '@/Consts/startTimeType.js';
 
 const props = defineProps({
@@ -18,7 +19,8 @@ const props = defineProps({
         required: true,
     },
 });
-const user = computed(() => page.props.auth.user)
+const page = usePage()
+const user = computed(() => page.props.auth.user.name)
 const form = useForm({
     event: {
         name: '',
@@ -30,33 +32,20 @@ onBeforeMount(() => {
         form.event.name = reservation.user.name
         let startTime = dayjs(`${reservation.date}: ${START_TIME_TYPE_TEXT[reservation.start_time_type]}`).format('YYYY-MM-DDTHH:mm:ss')
         startTime = startTime+'Z'
-        // calendarOptions.events.push({
-        //     title: 'title',
-        //     date: '2023-11-26',
-        //     start: '2023-11-26T13:00:00Z',
-        //     // startTime: startTime,
-        //     // endTime: reservation.end_time,
-        //     allDay: false
-        // })
         events.push({
             id: reservation.id,
             title: reservation.user.name+'様',
             date: reservation.date,
-            // start: startTime,
             start: startTime,
-            // endTime: reservation.end_time,
             allDay: false
         })
     })
     console.log(events)
 })
-// const events = ref([])
 const events = [
     {
         title: '休憩時間',
         color: '#FF0000',
-        // start:  '2023-11-28',
-        // end: '2023-11-29',
         date: '2023-11-28',
         startTime: '11:00',
         endTime: '12:00',
@@ -83,7 +72,7 @@ const handleEventClick = (clickInfo) => {
     console.log(dayjs(clickInfo.event.startStr).add('hours', 1))
     form.event = {
         name: clickInfo.event.title,
-        date: dayjs(clickInfo.event.startStr).format('YYYY-MM-DD'),
+        date: dayjs(clickInfo.event.startStr).format('Y-M-D'),
         startTime: dayjs(clickInfo.event.startStr).format('YYYY-MM-DD:HH:mm:ss'),
         endTime: dayjs(clickInfo.event.startStr).add(1, 'hours').format('YYYY-MM-DD:HH:mm'),
         menus: menus,
@@ -116,23 +105,25 @@ const calendarOptions = {
         calendarApi.unselect()
 
         console.log(dayjs(selectInfo.startStr).format('YYYY-MM-DD:HH:mm'))
-        const startStr = dayjs(selectInfo.startStr).format('HH:mm')
-        const endStr = dayjs(selectInfo.startStr).add(1, 'hours').format('HH:mm')
+        const startStr = dayjs(selectInfo.startStr).subtract(9, 'hours').format('HH:mm:ss')
+        const endStr = dayjs(selectInfo.startStr).add(8, 'hours').format('HH:mm:ss')
         if (selectInfo.startStr.substring(14, 16) === '30') {
+            flashMessage('時間は1時間単位で選択してください。', 'error')
             return
         }
         form.event.value = {
-            title: form.name,
-            date: dayjs(selectInfo.startStr).format('YYYY-MM-DD:HH:mm'),
+            title: user.value,
+            date: dayjs(selectInfo.startStr).format('YYYY-MM-DD'),
             startTime: startStr,
             endTime: endStr,
             allDay: selectInfo.allDay
         }
-        // calendarApi.addEvent({
-        //     title: form.name,
-        //     start: selectInfo.startStr,
-        //     allDay: selectInfo.allDay
-        // })
+        calendarApi.addEvent({
+            title: user.value,
+            start: selectInfo.startStr,
+            allDay: selectInfo.allDay
+        })
+        emits('update:event', form.event)
     },
     eventClick: handleEventClick,
     // eventsSet: handleEvents,
@@ -163,6 +154,7 @@ const calendarOptions = {
 const isOpen = ref(false);
 const emits = defineEmits([
     'delete:modelValue',
+    'update:event'
 ]);
 const close = () => {
     isOpen.value = false;
@@ -170,7 +162,6 @@ const close = () => {
 }
 </script>
 <template>
-    <pre>{{ form.event }}</pre>
     <FullCalendar :options="calendarOptions" />
     <v-dialog
         v-model="isOpen"
@@ -210,7 +201,7 @@ const close = () => {
                     </v-list-item>
                 </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="props.isAdmin">
                 <v-col cols="4">
                     <v-list-subheader>注文内容</v-list-subheader>
                 </v-col>
