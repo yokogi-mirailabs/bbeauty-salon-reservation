@@ -17,7 +17,7 @@ const routes = [
 <v-app>
     <v-app-bar color="pink-lighten-5">
     <v-app-bar-title>
-        Application Bar
+        Beauty Salon Reservation
     </v-app-bar-title>
     </v-app-bar>
 

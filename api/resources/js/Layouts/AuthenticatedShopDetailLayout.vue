@@ -5,20 +5,12 @@ const shopId = ref(sessionStorage.getItem('shopId'));
 
 const routes = [
     {
-        name: 'メニュー一覧',
-        path: route('admin.menus.index', { shop: shopId.value }),
+        name: '過去の予約',
+        path: route('reservations.index', { shop: shopId.value }),
     },
     {
-        name: 'スタイリスト一覧',
-        path: route('admin.stylists.index', { shop: shopId.value }),
-    },
-    {
-        name: '顧客一覧',
-        // path: route('admin.shops.create'),
-    },
-    {
-        name: '分析',
-        // path: route('admin.shops.create'),
+        name: 'マイレビュー',
+        // path: route('stylists.index', { shop: shopId.value }),
     },
 ]
 </script>

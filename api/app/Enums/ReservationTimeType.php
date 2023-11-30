@@ -24,19 +24,19 @@ enum ReservationTimeType: int
     public function getLabel(): string
     {
         return match ($this) {
-            self::STSRT_TEN => '10:00~11:00',
-            self::START_ELEVEN => '11:00~12:00',
-            self::START_TWELVE => '12:00~13:00',
-            self::START_THIRTEEN => '13:00~14:00',
-            self::START_FOURTEEN => '14:00~15:00',
-            self::START_FIFTEEN => '15:00~16:00',
-            self::START_SIXTEEN => '16:00~17:00',
-            self::START_SEVENTEEN => '17:00~18:00',
-            self::START_EIGHTEEN => '18:00~19:00',
-            self::START_NINETEEN => '19:00~20:00',
-            self::START_TWENTY => '20:00~21:00',
-            self::START_TWENTY_ONE => '21:00~22:00',
-            self::START_TWENTY_TWO => '22:00~23:00',
+            self::STSRT_TEN => '10:00:00',
+            self::START_ELEVEN => '11:0:00',
+            self::START_TWELVE => '12:00:00',
+            self::START_THIRTEEN => '13:0:00',
+            self::START_FOURTEEN => '14:0:00',
+            self::START_FIFTEEN => '15:00:00',
+            self::START_SIXTEEN => '16:00:00',
+            self::START_SEVENTEEN => '17:00:00',
+            self::START_EIGHTEEN => '18:00:00',
+            self::START_NINETEEN => '19:00:00',
+            self::START_TWENTY => '20:00:00',
+            self::START_TWENTY_ONE => '21:00:00',
+            self::START_TWENTY_TWO => '22:00:00',
         };
     }
 }

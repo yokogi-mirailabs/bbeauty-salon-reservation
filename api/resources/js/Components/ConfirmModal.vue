@@ -4,7 +4,7 @@ import { mdiDelete } from '@mdi/js'
 const props = defineProps({
     modelValue: {
         type: String,
-        required: true,
+        required: false,
     },
 });
 const isOpen = ref(false);

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,6 +35,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('shops', ShopController::class);
+    Route::prefix('shops/{shop}')->group(function () {
+        Route::get('/reservations/calendar', [ReservationController::class, 'calendar'])->name('reservations.calendar');
+        Route::get('/reservations/thanks', [ReservationController::class, 'thanks'])->name('reservations.thanks');
+        Route::resource('reservations', ReservationController::class);
+    });
 });
 
 require __DIR__.'/auth.php';
