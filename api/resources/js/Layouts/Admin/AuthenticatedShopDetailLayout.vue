@@ -18,7 +18,7 @@ const routes = [
     },
     {
         name: '分析',
-        // path: route('admin.shops.create'),
+        path: route('admin.analyze', { shop: shopId.value }),
     },
 ]
 </script>

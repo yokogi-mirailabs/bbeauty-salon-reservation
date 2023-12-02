@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PaymentHistoryController;
 use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\StylistController;
+use App\Http\Controllers\Admin\AnalyzeController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
@@ -52,5 +53,7 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::resource('stylists', StylistController::class);
         Route::resource('payment_histories', PaymentHistoryController::class);
         Route::resource('reservations', ReservationController::class);
+        Route::post('/analyze', [AnalyzeController::class, 'analyze'])->name('analyze');
+        Route::get('/analyze', [AnalyzeController::class, 'index'])->name('analyze.index');
     });
 });
