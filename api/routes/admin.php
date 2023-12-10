@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\ShopController;
 use App\Http\Controllers\Admin\StylistController;
 use App\Http\Controllers\Admin\AnalyzeController;
+use App\Http\Controllers\Admin\MessageHistoryController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
@@ -55,5 +56,6 @@ Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::resource('reservations', ReservationController::class);
         Route::post('/analyze', [AnalyzeController::class, 'analyze'])->name('analyze');
         Route::get('/analyze', [AnalyzeController::class, 'index'])->name('analyze.index');
+        Route::get('/message_histories', [MessageHistoryController::class, 'index'])->name('message_histories.index');
     });
 });

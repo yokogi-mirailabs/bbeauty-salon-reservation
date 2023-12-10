@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\MessageHistoryController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -58,6 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/reservations/calendar', [ReservationController::class, 'calendar'])->name('reservations.calendar');
         Route::get('/reservations/thanks', [ReservationController::class, 'thanks'])->name('reservations.thanks');
         Route::resource('reservations', ReservationController::class);
+        Route::get('/message_histories', [MessageHistoryController::class, 'index'])->name('message_histories.index');
     });
 });
 

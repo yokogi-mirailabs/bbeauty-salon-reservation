@@ -3,7 +3,7 @@ import AuthenticatedShopDetailLayout from '@/Layouts/AuthenticatedShopDetailLayo
 import { STYLIST_POST_TYPE, STYLIST_POST_TYPE_TEXT } from '@/Consts/stylistPostType';
 import FullCalendar from '@/Components/Calendar.vue';
 import { useForm } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { computed, ref, onBeforeMount } from 'vue';
 import axios from 'axios';
 
 const props = defineProps({
@@ -16,7 +16,12 @@ const props = defineProps({
         required: true,
     },
 });
-const shopId = props.routeParams.parameters.shop;
+const shopId = props.routeParams.parameters.shop.id;
+console.log(shopId);
+console.log(props.routeParams)
+onBeforeMount(() => {
+    sessionStorage.setItem('shopId', shopId);
+});
 const form = useForm({
     stylist: {
         name: '',

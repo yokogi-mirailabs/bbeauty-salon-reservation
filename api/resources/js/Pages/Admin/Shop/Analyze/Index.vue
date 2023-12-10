@@ -49,6 +49,7 @@ const props = defineProps({
     },
 });
 const shopId = props.routeParams.parameters.shop;
+console.log(shopId)
 onBeforeMount(() => {
     sessionStorage.setItem('shopId', shopId);
 });
