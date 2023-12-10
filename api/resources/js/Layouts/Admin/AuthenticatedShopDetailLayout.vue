@@ -20,6 +20,10 @@ const routes = [
         name: '分析',
         path: route('admin.analyze', { shop: shopId.value }),
     },
+    {
+        name: '事前相談',
+        path: route('admin.message_histories.index', { shop: shopId.value }),
+    },
 ]
 </script>
 

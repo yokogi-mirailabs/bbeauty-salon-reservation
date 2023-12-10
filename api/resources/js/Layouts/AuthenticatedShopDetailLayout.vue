@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 
 const shopId = ref(sessionStorage.getItem('shopId'));
+console.log(shopId.value);
 
 const routes = [
     {
@@ -11,6 +12,10 @@ const routes = [
     {
         name: 'マイレビュー',
         // path: route('stylists.index', { shop: shopId.value }),
+    },
+    {
+        name: '事前相談',
+        path: route('message_histories.index', { shop: shopId.value }),
     },
 ]
 </script>

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\MessageHistoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/shop/{shop}/reservation', [ReservationController::class, 'index'])->name('api.reservations.index');
+Route::get('/shops/{shop}/reservation', [ReservationController::class, 'index'])->name('api.reservations.index');
+Route::get('/shops/{shop}/message_histories', [MessageHistoryController::class, 'index'])->name('api.message_histories.index');
+Route::post('/shops/{shop}/message_histories', [MessageHistoryController::class, 'store'])->name('api.message_histories.store');

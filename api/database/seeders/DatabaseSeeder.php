@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             StylistSeeder::class,
             ReservationSeeder::class,
+            MessageHistorySeeder::class,
         ]);
     }
 }
