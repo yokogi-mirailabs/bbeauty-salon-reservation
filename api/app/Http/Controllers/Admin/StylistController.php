@@ -22,7 +22,9 @@ class StylistController extends Controller
     public function index(Request $request)
     {
         $this->authorize('viewAny', Stylist::class);
-        $stylists = Stylist::all();
+        $stylists = Stylist::query()
+            ->orderByDesc('created_at')
+            ->get();
         return Inertia::render('Admin/Shop/Stylist/Index', compact('stylists'));
     }
 

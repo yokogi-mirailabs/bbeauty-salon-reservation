@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 
 const shopId = ref(sessionStorage.getItem('shopId'));
 console.log(shopId.value);
@@ -10,14 +11,30 @@ const routes = [
         path: route('reservations.index', { shop: shopId.value }),
     },
     {
+        name: '予約する',
+        path: route('reservations.calendar', { shop: shopId.value }),
+    },
+    {
         name: 'マイレビュー',
-        // path: route('stylists.index', { shop: shopId.value }),
+        path: route('reviews.index', { shop: shopId.value }),
     },
     {
         name: '事前相談',
         path: route('message_histories.index', { shop: shopId.value }),
     },
+    {
+        name: 'ポイントカード',
+        path: route('point_cards.index', { shop: shopId.value }),
+    },
 ]
+const form = useForm({})
+const logout = () => {
+    form.post(route('logout'), {
+        onSuccess: () => {
+            window.location.href = route('login');
+        },
+    });
+}
 </script>
 
 <template>
@@ -31,6 +48,13 @@ const routes = [
         <v-navigation-drawer permanent>
             <v-divider></v-divider>
             <v-list-item v-for="(route, index) in routes" link :title=route.name :href="route.path"></v-list-item>
+            <template v-slot:append>
+                <div class="pa-2">
+                <v-btn block @click="logout">
+                    Logout
+                </v-btn>
+                </div>
+            </template>
         </v-navigation-drawer>
 
         <v-main>
@@ -38,10 +62,6 @@ const routes = [
             <slot />
         </v-container>
         </v-main>
-
-        <v-bottom-navigation>
-        Button Navigation
-        </v-bottom-navigation>
 
     </v-app>
 </template>

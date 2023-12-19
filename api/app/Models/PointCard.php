@@ -5,23 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class PointCard extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
         'shop_id',
-        'good_flag',
-        'evaluation',
-        'body'
+        'point',
     ];
 
     protected $casts = [
         'user_id' => 'integer',
         'shop_id' => 'integer',
-        'good_flag' => 'boolean',
-        'evaluation' => 'integer',
+        'point' => 'integer',
     ];
 
     public function user()

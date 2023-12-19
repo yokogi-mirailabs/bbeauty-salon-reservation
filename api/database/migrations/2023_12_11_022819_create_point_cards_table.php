@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('message_histories', function (Blueprint $table) {
+        Schema::create('point_cards', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreignId('stylist_id')
+            $table->foreignId('shop_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->boolean('from_user')->default(true);
-            $table->string('body', 1000);
+            $table->integer('point')->comment('ポイント');
             $table->softDeletesDatetime();
             $table->datetimes();
         });
@@ -33,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('message_histories');
+        Schema::dropIfExists('point_cards');
     }
 };
