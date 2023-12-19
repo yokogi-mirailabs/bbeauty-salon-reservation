@@ -116,11 +116,11 @@ const isOpen = ref(false);
             >
                 <v-sheet
                     @click="form.stylist = stylist"
-                    color="deep-purple-lighten-2"
+                    color="white"
                     height="100%"
                 >
                     <div @click="setStylist(stylist)" class="d-flex fill-height justify-center align-center">
-                        <div class="text-h2">
+                        <div>
                             <p>{{ stylist.name }}</p>
                             <p>{{ STYLIST_POST_TYPE_TEXT[stylist.job_post] }}/指名料なし ({{ stylist.working_year }}年目)</p>
                         </div>
@@ -128,7 +128,7 @@ const isOpen = ref(false);
                 </v-sheet>
             </v-carousel-item>
         </v-carousel>
-        <v-sheet>
+        <v-sheet class="text-h5">
             選択中のスタイリスト: {{ form.stylist.name }}
         </v-sheet>
         <v-card elevation="3" class="mb-3 mt-6">
@@ -142,7 +142,7 @@ const isOpen = ref(false);
             </v-card-text>
         </v-card>
         <v-row v-for="(menu, index) in menus">
-            <v-col cols="6">
+            <v-col cols="4">
                 <v-checkbox
                     v-model="form.menus"
                     :label="menu.name"
@@ -155,9 +155,6 @@ const isOpen = ref(false);
         <v-sheet>
             計: {{ price }} 円
         </v-sheet>
-            <!-- :href="route('reservations.store', {
-                shop: shopId,
-            })" -->
         <v-btn
             @click="isOpen = true"
             color="deep-purple-lighten-2"

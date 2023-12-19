@@ -48,14 +48,20 @@ class ReservationController extends Controller
     {
         return DB::transaction(function () use ($request, $shop) {
             $date = Carbon::parse($request->event['date'])->format('Y-m-d');
+            \Log::debug("message: {$date}");
             $startTimeType = collect(ReservationTimeType::cases())->map(function ($timeType) use ($request) {
+                \Log::debug("message: {$timeType->value}");
+                \Log::debug('startTime', [$request->event['startTime']]);
                 if (ReservationTimeType::from($timeType->value)->getLabel() == $request->event['startTime']) {
+                    \Log::debug("goal: {$timeType->value}");
+                    \Log::debug('goalstartTime', [$request->event['startTime']]);
                     return $timeType->value;
                 }
             });
             $start = $startTimeType->first(function ($timeType) {
                 return $timeType !== null;
             });
+            \Log::debug("message: {$start}");
             $reservation = Reservation::create([
                 'user_id' => $request->user()->id,
                 'shop_id' => $shop->id,

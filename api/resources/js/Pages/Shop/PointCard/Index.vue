@@ -34,7 +34,7 @@ const props = defineProps({
                 <div class="d-flex">
                     <strong class="me-4">{{ point }}ポイント目！</strong>
                     <div>
-                    <strong v-if="point % 5 === 0">おめてとうございます！割引クーポンが配布されました。</strong>
+                    <strong v-if="point % 5 === 0">おめでとうございます！割引クーポンが配布されました。</strong>
                     <div class="text-caption">
                         ご来店ありがとうございました。
                     </div>

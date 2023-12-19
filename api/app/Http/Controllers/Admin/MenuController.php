@@ -18,6 +18,7 @@ class MenuController extends Controller
     public function index(Request $request)
     {
         $menus = Menu::query()
+            ->where('shop_id', $request->shop)
             ->orderByDesc('created_at')
             ->get();
         return Inertia::render('Admin/Shop/Menu/Index', compact('menus'));

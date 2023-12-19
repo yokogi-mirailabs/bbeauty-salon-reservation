@@ -43,32 +43,32 @@ class ReservationSeeder extends Seeder
             })
             ->createMany([
                 [
-                    'date' => '2023-11-26',
+                    'date' => '2023-12-17',
                     'start_time_type' => 1,
                     // 'stylist_id' => $stylists->random()->id,
                     'stylist_id' => 1,
                     // 'shop_id' => $shop->id,
                 ],
                 [
-                    'date' => '2023-11-28',
+                    'date' => '2023-12-18',
                     'start_time_type' => 9,
                     'stylist_id' => 1
                     // 'shop_id' => $shop->id,
                 ],
                 [
-                    'date' => '2023-11-29',
+                    'date' => '2023-12-20',
                     'start_time_type' => 6,
                     'stylist_id' => 1
                     // 'shop_id' => $shop->id,
                 ],
                 [
-                    'date' => '2023-11-28',
+                    'date' => '2023-12-23',
                     'start_time_type' => 2,
                     'stylist_id' => 1
                     // 'shop_id' => $shop->id,
                 ],
                 [
-                    'date' => '2023-11-30',
+                    'date' => '2023-12-22',
                     'start_time_type' => 10,
                     'stylist_id' => 1
                     // 'shop_id' => $shop->id,

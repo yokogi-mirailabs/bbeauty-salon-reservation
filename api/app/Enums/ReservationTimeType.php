@@ -25,10 +25,10 @@ enum ReservationTimeType: int
     {
         return match ($this) {
             self::STSRT_TEN => '10:00:00',
-            self::START_ELEVEN => '11:0:00',
+            self::START_ELEVEN => '11:00:00',
             self::START_TWELVE => '12:00:00',
-            self::START_THIRTEEN => '13:0:00',
-            self::START_FOURTEEN => '14:0:00',
+            self::START_THIRTEEN => '13:00:00',
+            self::START_FOURTEEN => '14:00:00',
             self::START_FIFTEEN => '15:00:00',
             self::START_SIXTEEN => '16:00:00',
             self::START_SEVENTEEN => '17:00:00',

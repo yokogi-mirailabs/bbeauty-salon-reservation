@@ -14,10 +14,6 @@ const routes = [
         path: route('admin.stylists.index', { shop: shopId.value }),
     },
     {
-        name: '顧客一覧',
-        // path: route('admin.shops.create'),
-    },
-    {
         name: '分析',
         path: route('admin.analyze', { shop: shopId.value }),
     },
