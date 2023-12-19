@@ -22,7 +22,10 @@ class ReservationController extends Controller
         // $this->authorize('viewAny', Reservation::class);
         // 自分の予約一覧を表示(一日前だったら削除可能)
         // ホットペッパーに寄せるならキャンセルしてから再予約させる（updateなし）
-        $reservations = $request->user()->reservations()->with(['paymentHistories.menu', 'user', 'shop'])->get();
+        $reservations = $request->user()->reservations()
+            ->with(['paymentHistories.menu', 'user', 'shop'])
+            ->orderByDesc('created_at')
+            ->get();
         return Inertia::render('Shop/Reservation/Index', compact('reservations'));
     }
 
@@ -68,6 +71,15 @@ class ReservationController extends Controller
                         'count' => 1
                     ]);
                 }
+            }
+            if ($request->user()->pointCards->isEmpty()) {
+                $shop->pointCards()->create([
+                    'user_id' => $request->user()->id,
+                    'point' => 1
+                ]);
+            } else {
+                // $pointCard = $shop->pointCards()->where('user_id', $request->user()->id)->first();
+                $shop->pointCards()->where('user_id', $request->user()->id)->increment('point', 1);
             }
             return redirect()->route('reservations.thanks', ['shop' => $shop->getKey()]);
         });

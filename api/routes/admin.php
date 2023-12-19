@@ -28,17 +28,17 @@ Route::get('/dashboard', function () {
     return Inertia::render('Admin/Dashboard');
 })->middleware(['auth:admin, verified'])->name('admin.dashboard');
 
-Route::middleware('guest')->group(function () {
+Route::middleware('guest:admin')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('admin.register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('admin.login');
-
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
 });
+Route::get('login', [AuthenticatedSessionController::class, 'create'])
+            ->name('admin.login');
+
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 Route::middleware('auth:admin')->name('admin.')->group(function () {
 

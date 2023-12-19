@@ -17,7 +17,9 @@ class MenuController extends Controller
 {
     public function index(Request $request)
     {
-        $menus = Menu::all();
+        $menus = Menu::query()
+            ->orderByDesc('created_at')
+            ->get();
         return Inertia::render('Admin/Shop/Menu/Index', compact('menus'));
     }
 

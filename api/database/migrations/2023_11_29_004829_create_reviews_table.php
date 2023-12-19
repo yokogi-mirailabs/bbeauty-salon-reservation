@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('shop_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->boolean('good_flag')->default(true)->comment('良い評価かどうか');
+            $table->integer('evaluation')->comment('評価');
+            $table->string('body', 1000)->comment('レビュー本文');
+            $table->softDeletesDatetime();
+            $table->datetimes();
         });
     }
 

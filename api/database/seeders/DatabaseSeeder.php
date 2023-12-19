@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             StylistSeeder::class,
             ReservationSeeder::class,
             MessageHistorySeeder::class,
+            ReviewSeeder::class,
+            PointCardSeeder::class,
         ]);
     }
 }

@@ -15,7 +15,9 @@ class ShopController extends Controller
 {
     public function index(Request $request)
     {
-        $shops = Shop::all();
+        $shops = Shop::query()
+            ->orderByDesc('created_at')
+            ->get();
         return Inertia::render('Shop/Index', compact('shops'));
     }
 }

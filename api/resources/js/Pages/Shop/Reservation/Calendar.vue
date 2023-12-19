@@ -5,6 +5,7 @@ import FullCalendar from '@/Components/Calendar.vue';
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref, onBeforeMount } from 'vue';
 import axios from 'axios';
+import flashMessage from '@/Utils/flashMessage';
 
 const props = defineProps({
     stylists: {

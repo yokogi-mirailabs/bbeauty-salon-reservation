@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
 
 const shopId = ref(sessionStorage.getItem('shopId'));
 
@@ -25,6 +26,14 @@ const routes = [
         path: route('admin.message_histories.index', { shop: shopId.value }),
     },
 ]
+const form = useForm({})
+const logout = () => {
+    form.post(route('admin.logout'), {
+        onSuccess: () => {
+            window.location.href = route('admin.login');
+        },
+    });
+}
 </script>
 
 <template>
@@ -38,6 +47,13 @@ const routes = [
         <v-navigation-drawer permanent>
             <v-divider></v-divider>
             <v-list-item v-for="(route, index) in routes" link :title=route.name :href="route.path"></v-list-item>
+            <template v-slot:append>
+                <div class="pa-2">
+                <v-btn block @click="logout">
+                    Logout
+                </v-btn>
+                </div>
+            </template>
         </v-navigation-drawer>
 
         <v-main>
@@ -45,10 +61,6 @@ const routes = [
             <slot />
         </v-container>
         </v-main>
-
-        <v-bottom-navigation>
-        Button Navigation
-        </v-bottom-navigation>
 
     </v-app>
 </template>

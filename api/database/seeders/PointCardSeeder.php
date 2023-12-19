@@ -6,9 +6,9 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Shop;
 use App\Models\User;
-use App\Models\Review;
+use App\Models\PointCard;
 
-class ReviewSeeder extends Seeder
+class PointCardSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,12 +17,9 @@ class ReviewSeeder extends Seeder
     {
         $shop = Shop::first();
         $user = User::first();
-
-        Review::factory()
-            ->count(3)
-            ->create([
-                'user_id' => $user->id,
-                'shop_id' => $shop->id,
-            ]);
+        PointCard::factory()->create([
+            'user_id' => $user->id,
+            'shop_id' => $shop->id,
+        ]);
     }
 }
