@@ -49,6 +49,7 @@ const deleteReview = (reviewId) => {
         </template>
 
         <v-card v-for="(review, index) in props.reviews" :key="review.id" elevation="3" class="mb-3">
+            <v-toolbar color="pink-lighten-5" flat />
             <v-card-text>
                 <v-row>
                     <v-col class="text-right">

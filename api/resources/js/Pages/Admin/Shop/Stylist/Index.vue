@@ -47,6 +47,7 @@ const deleteStylist = (stylistId) => {
         </template>
 
         <v-card v-for="(stylist, index) in props.stylists" :key="stylist.id" elevation="3" class="mb-3">
+            <v-toolbar color="pink-lighten-5" flat />
             <v-card-text>
                 <v-row>
                     <v-col class="text-right">

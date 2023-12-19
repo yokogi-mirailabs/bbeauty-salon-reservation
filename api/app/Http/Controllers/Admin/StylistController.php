@@ -23,6 +23,7 @@ class StylistController extends Controller
     {
         $this->authorize('viewAny', Stylist::class);
         $stylists = Stylist::query()
+            ->where('shop_id', $request->shop)
             ->orderByDesc('created_at')
             ->get();
         return Inertia::render('Admin/Shop/Stylist/Index', compact('stylists'));

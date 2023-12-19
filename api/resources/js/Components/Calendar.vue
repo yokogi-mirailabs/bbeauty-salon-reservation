@@ -45,7 +45,7 @@ onBeforeMount(() => {
 const events = [
     {
         title: '休憩時間',
-        color: '#FF0000',
+        color: '#FF99CC',
         date: '2023-11-28',
         startTime: '11:00',
         endTime: '12:00',
@@ -73,8 +73,9 @@ const handleEventClick = (clickInfo) => {
     form.event = {
         name: clickInfo.event.title,
         date: dayjs(clickInfo.event.startStr).format('Y-M-D'),
+        color: '#0099FF',
         startTime: dayjs(clickInfo.event.startStr).format('YYYY-MM-DD:HH:mm:ss'),
-        endTime: dayjs(clickInfo.event.startStr).add(1, 'hours').format('YYYY-MM-DD:HH:mm'),
+        endTime: dayjs(clickInfo.event.startStr).add(1, 'hours').format('YYYY-MM-DD:HH:mm:ss'),
         menus: menus,
     }
 }

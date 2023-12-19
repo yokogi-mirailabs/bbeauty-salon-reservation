@@ -1,11 +1,7 @@
 <script setup>
 import AuthenticatedShopDetailLayout from '@/Layouts/AuthenticatedShopDetailLayout.vue';
-import { STYLIST_POST_TYPE, STYLIST_POST_TYPE_TEXT } from '@/Consts/stylistPostType';
 import { START_TIME_TYPE, START_TIME_TYPE_TEXT } from '@/Consts/startTimeType';
-import FullCalendar from '@/Components/Calendar.vue';
 import { useForm } from '@inertiajs/vue3';
-import ConfirmModal from '@/Components/ConfirmModal.vue';
-import { computed, ref } from 'vue';
 
 const props = defineProps({
     reservations: {
@@ -17,7 +13,6 @@ const props = defineProps({
         required: true,
     },
 });
-console.log(props.reservations)
 const form = useForm({});
 const menus = (reservation) => {
     return reservation.payment_histories.map((payment) => {
@@ -32,14 +27,8 @@ const menus = (reservation) => {
         </template>
 
         <v-card v-for="(reservation, index) in props.reservations" :key="reservation.id" elevation="3" class="mb-3">
+            <v-toolbar color="pink-lighten-5" flat />
             <v-card-text>
-                <!-- <v-row>
-                    <v-col class="text-right">
-                        <ConfirmModal
-                            @delete:model-value="cancelReservation(reservation.id)"
-                            />
-                    </v-col>
-                </v-row> -->
                 <v-row>
                     <v-col cols="4">
                         <v-list-subheader>店舗名</v-list-subheader>
@@ -53,9 +42,7 @@ const menus = (reservation) => {
                         <v-list-subheader>開始時刻</v-list-subheader>
                     </v-col>
                     <v-col cols="8">
-                        <v-list-item>
-                            <v-list-item-title>{{ START_TIME_TYPE_TEXT[reservation.start_time_type] }}</v-list-item-title>
-                        </v-list-item>
+                        <div class="text-subtitle-1">{{ START_TIME_TYPE_TEXT[reservation.start_time_type] }}</div>
                     </v-col>
                 </v-row>
                 <v-row>
@@ -69,7 +56,7 @@ const menus = (reservation) => {
                             </v-col>
                             <v-col cols="8">
                                 <v-list-item>
-                                    <v-list-item-title>{{ menu.price}}</v-list-item-title>
+                                    <v-list-item-title>{{ menu.price}}円</v-list-item-title>
                                 </v-list-item>
                             </v-col>
                         </v-row>

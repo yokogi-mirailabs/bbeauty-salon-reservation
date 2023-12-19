@@ -34,6 +34,7 @@ const deleteShop = (shopId) => {
         </template>
 
         <v-card v-for="(shop, index) in props.shops" :key="shop.id" elevation="3" class="mb-3">
+            <v-toolbar color="pink-lighten-5" flat />
             <v-card-text>
                 <v-row>
                     <v-col class="text-right">
