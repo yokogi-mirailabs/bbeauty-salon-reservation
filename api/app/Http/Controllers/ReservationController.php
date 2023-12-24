@@ -7,9 +7,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Shop;
 use App\Models\Reservation;
-// use App\Http\Requests\Admin\Shop\StoreShopRequest;
-// use App\Http\Requests\Admin\Shop\UpdateShopRequest;
-// use App\Http\Requests\Admin\Shop\DestroyShopRequest;
+use App\Http\Requests\Reservation\StoreReservationRequest;
 use App\Models\Stylist;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -23,7 +21,7 @@ class ReservationController extends Controller
         // 自分の予約一覧を表示(一日前だったら削除可能)
         // ホットペッパーに寄せるならキャンセルしてから再予約させる（updateなし）
         $reservations = $request->user()->reservations()
-            ->with(['paymentHistories.menu', 'user', 'shop'])
+            ->with(['paymentHistories.menu', 'user', 'shop', 'stylist'])
             ->orderByDesc('created_at')
             ->get();
         return Inertia::render('Shop/Reservation/Index', compact('reservations'));
@@ -44,24 +42,18 @@ class ReservationController extends Controller
         return Inertia::render('Shop/Reservation/Calendar', compact('stylists'));
     }
 
-    public function store(Request $request, Shop $shop)
+    public function store(StoreReservationRequest $request, Shop $shop)
     {
         return DB::transaction(function () use ($request, $shop) {
             $date = Carbon::parse($request->event['date'])->format('Y-m-d');
-            \Log::debug("message: {$date}");
             $startTimeType = collect(ReservationTimeType::cases())->map(function ($timeType) use ($request) {
-                \Log::debug("message: {$timeType->value}");
-                \Log::debug('startTime', [$request->event['startTime']]);
                 if (ReservationTimeType::from($timeType->value)->getLabel() == $request->event['startTime']) {
-                    \Log::debug("goal: {$timeType->value}");
-                    \Log::debug('goalstartTime', [$request->event['startTime']]);
                     return $timeType->value;
                 }
             });
             $start = $startTimeType->first(function ($timeType) {
                 return $timeType !== null;
             });
-            \Log::debug("message: {$start}");
             $reservation = Reservation::create([
                 'user_id' => $request->user()->id,
                 'shop_id' => $shop->id,

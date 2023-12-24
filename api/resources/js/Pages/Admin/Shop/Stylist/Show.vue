@@ -1,12 +1,8 @@
 <script setup>
 import AuthenticatedShopDetailLayout from '@/Layouts/Admin/AuthenticatedShopDetailLayout.vue';
-import { Head, useForm, Link } from '@inertiajs/vue3';
-import { mdiPencil, mdiPlus } from '@mdi/js'
-import ConfirmModal from '@/Components/ConfirmModal.vue';
-import flashMessage from '@/Utils/flashMessage';
-import { onBeforeMount } from 'vue';
-import { STYLIST_POST_TYPE, STYLIST_POST_TYPE_TEXT } from '@/Consts/stylistPostType';
+import { Head, useForm } from '@inertiajs/vue3';
 import FullCalendar from '@/Components/Calendar.vue';
+import { computed } from 'vue';
 
 const props = defineProps({
     stylist: {
@@ -26,19 +22,9 @@ const shopId = props.routeParams.parameters.shop;
 
 const form = useForm({});
 
-const deleteStylist = (stylistId) => {
-    form.delete(route('admin.stylists.destroy', {
-        'shop': shopId,
-        'stylist': stylistId,
-    }), {
-        onSuccess: () => {
-            flashMessage('スタイリストを削除しました。', 'success')
-        },
-        onError: (e) => {
-            flashMessage('削除に失敗しました。再度お試しください。', 'error')
-        },
-    });
-};
+const menus = computed(() => {
+    return props.stylist.menus;
+});
 </script>
 
 <template>
@@ -57,5 +43,20 @@ const deleteStylist = (stylistId) => {
                 />
             </v-card-text>
         </v-card>
+        <v-sheet class="text-h6">
+            担当メニュー
+        </v-sheet>
+        <v-row>
+            <v-col v-for="(menu, index) in menus" cols="3">
+                <v-checkbox
+                    v-model="form.menus"
+                    :label="menu.name"
+                    color="deep-purple-lighten-2"
+                    :value="menu"
+                    hide-details
+                    disabled
+                ></v-checkbox>
+            </v-col>
+        </v-row>
     </AuthenticatedShopDetailLayout>
 </template>

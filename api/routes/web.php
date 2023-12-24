@@ -39,12 +39,7 @@ Route::get('/build/{any}', function ($any) {
     return response(\File::get(public_path() . '/build/'.$any))->header('Content-Type',$mine_type[$extensions]);
 })->where('any', '.*');
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect(route('login'));
 });
 
 Route::get('/dashboard', function () {

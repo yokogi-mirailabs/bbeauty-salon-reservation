@@ -67,7 +67,7 @@ const confirm = () => {
             flashMessage('予約を作成しました', 'success')
         },
         onError: (e) => {
-            flashMessage('作成に失敗しました。再度お試しください。', 'error')
+            flashMessage('作成に失敗しました。入力内容をご確認ください。', 'error')
         },
         onFinish: () => {
             form.event = null;
@@ -104,7 +104,6 @@ const isOpen = ref(false);
             </v-col>
         </v-row>
         <v-carousel
-            class="mb-6"
             cycle
             height="200"
             hide-delimiter-background
@@ -113,7 +112,7 @@ const isOpen = ref(false);
             <v-carousel-item
                 v-for="(stylist, i) in props.stylists"
                 :key="i"
-            >
+                >
                 <v-sheet
                     @click="form.stylist = stylist"
                     color="white"
@@ -123,26 +122,27 @@ const isOpen = ref(false);
                         <div>
                             <p>{{ stylist.name }}</p>
                             <p>{{ STYLIST_POST_TYPE_TEXT[stylist.job_post] }}/指名料なし ({{ stylist.working_year }}年目)</p>
+                            <p>{{ stylist.description }}</p>
                         </div>
                     </div>
                 </v-sheet>
             </v-carousel-item>
         </v-carousel>
-        <v-sheet class="text-h5">
+        <div class="text-caption text-right" color="red">※最初にスタイリストを選択してください</div>
+        <v-sheet class="text-h5 pb-6">
             選択中のスタイリスト: {{ form.stylist.name }}
         </v-sheet>
-        <v-card elevation="3" class="mb-3 mt-6">
-            <v-card-text>
-                <FullCalendar
-                    :key="calendarKey"
-                    :reservations="reservations"
-                    :isAdmin="false"
-                    @update:event="setEvent($event)"
-                    />
-            </v-card-text>
-        </v-card>
-        <v-row v-for="(menu, index) in menus">
-            <v-col cols="4">
+            <FullCalendar
+                :key="calendarKey"
+                :reservations="reservations"
+                :isAdmin="false"
+                @update:event="setEvent($event)"
+                />
+        <v-sheet class="text-h5 pt-6">
+            担当メニュー
+        </v-sheet>
+        <v-row style="min-height: 80px;">
+            <v-col v-for="(menu, index) in menus" cols="4">
                 <v-checkbox
                     v-model="form.menus"
                     :label="menu.name"

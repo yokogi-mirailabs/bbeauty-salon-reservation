@@ -25,7 +25,8 @@ class AnalyzeController extends Controller
             ->where('shop_id', $request->shop)
             ->get()
             ->pluck('user')
-            ->unique();
+            ->unique()
+            ->values();
 
         return Inertia::render('Admin/Shop/Analyze/Index', compact('stylists', 'users'));
     }

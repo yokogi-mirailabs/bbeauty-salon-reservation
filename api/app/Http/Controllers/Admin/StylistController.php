@@ -32,6 +32,7 @@ class StylistController extends Controller
     public function show(Request $request, Shop $shop, Stylist $stylist)
     {
         $this->authorize('view', [$stylist, $shop]);
+        $stylist->load('menus');
         $reservations = Reservation::with(['paymentHistories.menu', 'user'])
             ->where('stylist_id', $stylist->id)
             ->get();
@@ -60,6 +61,7 @@ class StylistController extends Controller
     public function edit(Shop $shop, Stylist $stylist)
     {
         $this->authorize('update', [$stylist, $shop]);
+        $stylist->load('menus');
         $menus = Menu::where('shop_id', $shop->id)->get();
         return Inertia::render('Admin/Shop/Stylist/Edit', compact('stylist', 'menus'));
     }
@@ -70,8 +72,7 @@ class StylistController extends Controller
             $stylist->update($request->validated());
             $stylist->refresh();
             if (count($request->menus) > 0) {
-                $stylist->menus()->detach($request->menus);
-                $stylist->menus()->attach($request->menus);
+                $stylist->menus()->sync($request->menus);
             }
             return redirect()->route('admin.stylists.index', ['shop' => $shop->getKey()]);
         });

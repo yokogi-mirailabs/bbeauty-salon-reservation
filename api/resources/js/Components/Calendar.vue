@@ -7,7 +7,8 @@ import { ref, onBeforeMount, computed } from 'vue'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayjs from "dayjs";
 import flashMessage from '@/Utils/flashMessage';
-import { START_TIME_TYPE, START_TIME_TYPE_TEXT } from '@/Consts/startTimeType.js';
+import { START_TIME_TYPE_TEXT } from '@/Consts/startTimeType.js';
+import { mdiDelete } from '@mdi/js'
 
 const props = defineProps({
     reservations: {
@@ -36,6 +37,7 @@ onBeforeMount(() => {
             id: reservation.id,
             title: reservation.user.name+'様',
             date: reservation.date,
+            color: '#424242',
             start: startTime,
             allDay: false
         })
@@ -45,20 +47,23 @@ onBeforeMount(() => {
 const events = [
     {
         title: '休憩時間',
-        color: '#FF99CC',
+        color: '#FF1744',
         date: '2023-11-28',
         startTime: '11:00',
         endTime: '12:00',
         allDay: false
     },
 ]
-const handleDateSelect = (selectInfo) => {
-    // alert('handleDate')
-    events.push({ title: 'Taro', date: '2023-11-38' })
-}
 const handleEventClick = (clickInfo) => {
-    console.log(clickInfo)
+    if (clickInfo.event.title === '休憩時間') {
+        if (props.isAdmin) {
+            return;
+        }
+        flashMessage('従業員の休憩時間です。他の時間を選択なさってください。', 'error')
+        return;
+    }
     let reservationId = clickInfo.event.id
+    eventId = reservationId
     let menus = []
     props.reservations.map((reservation) => {
         if (reservation.id == reservationId) {
@@ -73,15 +78,15 @@ const handleEventClick = (clickInfo) => {
     form.event = {
         name: clickInfo.event.title,
         date: dayjs(clickInfo.event.startStr).format('Y-M-D'),
-        color: '#0099FF',
+        color: '#424242',
         startTime: dayjs(clickInfo.event.startStr).format('YYYY-MM-DD:HH:mm:ss'),
         endTime: dayjs(clickInfo.event.startStr).add(1, 'hours').format('YYYY-MM-DD:HH:mm:ss'),
         menus: menus,
     }
 }
-const handleEvents = (events) => {
-    alert('handleEvents')
-}
+let eventId = 0
+let calendarApi = null
+const isPushed = ref(false)
 const calendarOptions = {
     locale: 'ja',
     timeZone: 'UTC',
@@ -96,12 +101,10 @@ const calendarOptions = {
     selectable: true,
     initialView: 'timeGridWeek',
     select: function(selectInfo) {
-        if (props.isAdmin) {
+        if (props.isAdmin || isPushed.value) {
             return
         }
-        // let title = prompt('Please enter a new title for your event')
-        let calendarApi = selectInfo.view.calendar
-        console.log(selectInfo)
+        calendarApi = selectInfo.view.calendar
 
         calendarApi.unselect()
 
@@ -119,11 +122,14 @@ const calendarOptions = {
             endTime: endStr,
             allDay: selectInfo.allDay
         }
+        eventId = Math.random().toString(32).substring(2)
         calendarApi.addEvent({
+            id: eventId,
             title: user.value,
             start: selectInfo.startStr,
             allDay: selectInfo.allDay
         })
+        isPushed.value = true
         emits('update:event', form.event)
     },
     eventClick: handleEventClick,
@@ -157,9 +163,11 @@ const emits = defineEmits([
     'delete:modelValue',
     'update:event'
 ]);
-const close = () => {
+const deleteEvent = (id) => {
+    const event = calendarApi.getEventById( id )
+    event.remove();
     isOpen.value = false;
-    emits('delete:modelValue')
+    isPushed.value = false;
 }
 </script>
 <template>
@@ -169,10 +177,24 @@ const close = () => {
         width="500px"
         >
         <v-card class="px-8 pt-4">
-            <v-card-text class="mb-4 text-center">
-            予約詳細
-            </v-card-text>
             <v-row>
+                <v-col class="text-right">
+                    <v-btn
+                        variant="text"
+                        :icon="mdiDelete"
+                        @click="deleteEvent(eventId)"
+                        >
+                    </v-btn>
+                </v-col>
+            </v-row>
+            <v-card-text v-if="form.event.name !== '休憩時間'" class="mb-4 text-center">
+                予約詳細
+            </v-card-text>
+            <v-card-text v-else class="mb-4 text-center">
+                休憩時間
+            </v-card-text>
+            
+            <v-row v-if="form.event.name !== '休憩時間'">
                 <v-col cols="4">
                     <v-list-subheader>お名前</v-list-subheader>
                 </v-col>

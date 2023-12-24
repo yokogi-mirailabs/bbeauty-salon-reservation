@@ -48,10 +48,10 @@ const rules = {
 const form = useForm({
     name: props.stylist.name,
     description: props.stylist.description,
-    job_post: props.stylist.post,
+    job_post: props.stylist.job_post,
     speciality: props.stylist.speciality,
     working_year: props.stylist.working_year,
-    menus: [props.menus[0].id],
+    menus: props.stylist.menus.map(menu => menu.id),
 });
 
 const submit = () => {

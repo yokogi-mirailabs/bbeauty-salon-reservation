@@ -33,7 +33,7 @@ const deleteShop = (shopId) => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">店舗一覧</h2>
         </template>
 
-        <v-card v-for="(shop, index) in props.shops" :key="shop.id" elevation="3" class="mb-3">
+        <v-card v-for="(shop, index) in props.shops" :key="shop.id" elevation="3" class="mb-3 mx-auto" style="max-width: 600px;">
             <v-toolbar color="pink-lighten-5" flat />
             <v-card-text>
                 <v-row>

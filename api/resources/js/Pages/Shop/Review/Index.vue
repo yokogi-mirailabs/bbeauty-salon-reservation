@@ -48,7 +48,19 @@ const deleteReview = (reviewId) => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">レビュー一覧</h2>
         </template>
 
-        <v-card v-for="(review, index) in props.reviews" :key="review.id" elevation="3" class="mb-3">
+        <div class="text-center">
+            <v-btn
+                :href="route('reviews.create', {
+                    shop: shopId,
+                })"
+                color="deep-purple-lighten-2"
+                type="button"
+                class="my-4"
+                width="600px"
+                >レビューを作成する
+            </v-btn>
+        </div>
+        <v-card v-for="(review, index) in props.reviews" :key="review.id" elevation="3" class="mb-3 mx-auto" style="max-width: 600px;">
             <v-toolbar color="pink-lighten-5" flat />
             <v-card-text>
                 <v-row>
@@ -100,16 +112,6 @@ const deleteReview = (reviewId) => {
                         <div class="text-subtitle-1">{{ review.body }}</div>
                     </v-col>
                 </v-row>
-                <v-btn
-                    :href="route('reviews.create', {
-                        shop: shopId,
-                    })"
-                    color="deep-purple-lighten-2"
-                    type="submit"
-                    class="mt-12"
-                    block
-                    >レビューを作成する
-                </v-btn>
             </v-card-text>
         </v-card>
     </AuthenticatedShopDetailLayout>

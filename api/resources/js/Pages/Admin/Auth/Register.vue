@@ -13,6 +13,21 @@ const form = useForm({
     password_confirmation: '',
 });
 
+const rules = {
+    name: [
+        value => !!value || '名前は必須項目です。',
+    ],
+    email: [
+        value => !!value || 'メールアドレスは必須項目です。',
+    ],
+    password: [
+        value => !!value || 'パスワードは必須項目です。',
+    ],
+    password_confirmation: [
+        value => !!value || 'パスワード確認は必須項目です。',
+    ],
+}
+
 const submit = () => {
     form.post(route('admin.register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
@@ -24,80 +39,76 @@ const submit = () => {
     <GuestLayout>
         <Head title="Register" />
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="name" value="Name" />
-
-                <TextInput
-                    id="name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.name"
-                    required
-                    autofocus
-                    autocomplete="name"
-                />
-
-                <InputError class="mt-2" :message="form.errors.name" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
-
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
+        <v-sheet class="ma-4 py-6">
+            <v-form @submit.prevent="submit">
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field
+                            v-model="form.name"
+                            label="名前"
+                            variant="outlined"
+                            :rules="rules.name"
+                            :error-messages="form.errors.name"
+                            required
+                            >
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field
+                            v-model="form.email"
+                            label="メールアドレス"
+                            variant="outlined"
+                            :rules="rules.email"
+                            :error-messages="form.errors.email"
+                            required
+                            >
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field
+                            v-model="form.password"
+                            label="パスワード"
+                            :rules="rules.password"
+                            :error-messages="form.errors.password"
+                            type="password"
+                            required
+                            variant="outlined"
+                            >
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field
+                            v-model="form.password_confirmation"
+                            label="パスワード確認"
+                            :rules="rules.password_confirmation"
+                            :error-messages="form.errors.password_confirmation"
+                            type="password"
+                            required
+                            variant="outlined"
+                            >
+                        </v-text-field>
+                    </v-col>
+                </v-row>
                 <Link
                     :href="route('admin.login')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                    Already registered?
+                    すでに登録されている方はこちら
                 </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
-                </PrimaryButton>
-            </div>
-        </form>
+                <v-btn
+                    color="pink-lighten-5"
+                    type="submit"
+                    class="mt-12"
+                    block
+                    >会員登録
+                </v-btn>
+            </v-form>
+        </v-sheet>
     </GuestLayout>
 </template>

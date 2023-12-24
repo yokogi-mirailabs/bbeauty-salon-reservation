@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
     {
         Admin::factory()->create([
             'name' => 'admin',
-            'email' => 'admin@example.com',
+            'email' => 'admin@gmail.com',
         ]);
     }
 }

@@ -7,6 +7,8 @@ use App\Models\Shop;
 use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use App\Http\Requests\Review\StoreReviewRequest;
+use App\Http\Requests\Review\UpdateReviewRequest;
 
 class ReviewController extends Controller
 {
@@ -23,7 +25,7 @@ class ReviewController extends Controller
         return Inertia::render('Shop/Review/Create', compact('shop'));
     }
 
-    public function store(Request $request, Shop $shop)
+    public function store(StoreReviewRequest $request, Shop $shop)
     {
         return DB::transaction(function () use ($request, $shop) {
             $review = Review::create([
@@ -42,7 +44,7 @@ class ReviewController extends Controller
         return Inertia::render('Shop/Review/Edit', compact('shop', 'review'));
     }
 
-    public function update(Request $request, Shop $shop, Review $review)
+    public function update(UpdateReviewRequest $request, Shop $shop, Review $review)
     {
         return DB::transaction(function () use ($request, $shop, $review) {
             $review->update([

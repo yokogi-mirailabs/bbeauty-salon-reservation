@@ -45,19 +45,24 @@ const deleteMenu = (menuId) => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">メニュー一覧</h2>
         </template>
 
-        <v-card v-for="(menu, index) in props.menus" :key="menu.id" elevation="3" class="mb-3">
+        <div class="text-center">
+            <v-btn
+                :href="route('admin.menus.create', {
+                    shop: shopId,
+                })"
+                color="deep-purple-lighten-2"
+                type="button"
+                class="my-4"
+                width="600px"
+                >メニューを作成する
+            </v-btn>
+        </div>
+
+        <v-card v-for="(menu, index) in props.menus" :key="menu.id" elevation="3" class="mb-3 mx-auto" style="max-width: 600px;">
             <v-toolbar color="pink-lighten-5" flat />
             <v-card-text>
                 <v-row>
                     <v-col class="text-right">
-                        <v-btn
-                            variant="text"
-                            :icon="mdiPlus"
-                            :href="route('admin.menus.create', {
-                                shop: shopId,
-                            })"
-                            >
-                        </v-btn>
                         <v-btn
                             variant="text"
                             :icon="mdiPencil"
