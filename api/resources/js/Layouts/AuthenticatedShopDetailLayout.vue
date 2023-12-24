@@ -51,7 +51,7 @@ const logout = () => {
             <template v-slot:append>
                 <div class="pa-2">
                 <v-btn block @click="logout">
-                    Logout
+                    ログアウト
                 </v-btn>
                 </div>
             </template>

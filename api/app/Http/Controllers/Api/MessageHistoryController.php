@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MessageHistory;
 use App\Events\MessageHistoryCreated;
+use App\Http\Requests\Api\MessageHistory\StoreMessageHistoryRequest;
 
 class MessageHistoryController extends Controller
 {
@@ -24,7 +25,7 @@ class MessageHistoryController extends Controller
         return response()->json($messageHistories);
     }
 
-    public function store(Request $request)
+    public function store(StoreMessageHistoryRequest $request)
     {
         $messageHistory = MessageHistory::create([
             'user_id' => $request->user_id,

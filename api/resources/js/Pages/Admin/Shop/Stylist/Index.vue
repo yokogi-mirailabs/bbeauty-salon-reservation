@@ -46,19 +46,24 @@ const deleteStylist = (stylistId) => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">スタイリスト一覧</h2>
         </template>
 
-        <v-card v-for="(stylist, index) in props.stylists" :key="stylist.id" elevation="3" class="mb-3">
+        <div class="text-center">
+            <v-btn
+                :href="route('admin.stylists.create', {
+                    shop: shopId,
+                })"
+                color="deep-purple-lighten-2"
+                type="button"
+                class="my-4"
+                width="600px"
+                >スタイリストを作成する
+            </v-btn>
+        </div>
+
+        <v-card v-for="(stylist, index) in props.stylists" :key="stylist.id" elevation="3" class="mb-3 mx-auto" style="max-width: 600px;">
             <v-toolbar color="pink-lighten-5" flat />
             <v-card-text>
                 <v-row>
                     <v-col class="text-right">
-                        <v-btn
-                            variant="text"
-                            :icon="mdiPlus"
-                            :href="route('admin.stylists.create', {
-                                shop: shopId,
-                            })"
-                            >
-                        </v-btn>
                         <v-btn
                             variant="text"
                             :icon="mdiPencil"
@@ -121,7 +126,7 @@ const deleteStylist = (stylistId) => {
                     })"
                     color="deep-purple-lighten-2"
                     type="submit"
-                    class="mt-12"
+                    class="mt-4"
                     block
                     >スタイリスト予定確認
                 </v-btn>

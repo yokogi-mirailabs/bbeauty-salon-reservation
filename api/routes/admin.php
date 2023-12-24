@@ -16,12 +16,7 @@ use Inertia\Inertia;
 use Illuminate\Foundation\Application;
 
 Route::get('/', function () {
-    return Inertia::render('Admin/Welcome', [
-        'canLogin' => Route::has('admin.login'),
-        'canRegister' => Route::has('admin.register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect(route('admin.login'));
 });
 
 Route::get('/dashboard', function () {

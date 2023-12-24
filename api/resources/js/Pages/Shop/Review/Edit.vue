@@ -42,7 +42,7 @@ const submit = () => {
             flashMessage('レビューを更新しました。', 'success')
         },
         onError: (e) => {
-            flashMessage('更新に失敗しました。再度お試しください。', 'error')
+            flashMessage('更新に失敗しました。入力内容をご確認ください。', 'error')
         },
     });
 };

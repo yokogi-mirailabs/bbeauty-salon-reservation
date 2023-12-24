@@ -35,7 +35,7 @@ const submit = () => {
             flashMessage('レビューを作成しました。', 'success')
         },
         onError: (e) => {
-            flashMessage('作成に失敗しました。再度お試しください。', 'error')
+            flashMessage('作成に失敗しました。入力内容をご確認ください。', 'error')
         },
     });
 };

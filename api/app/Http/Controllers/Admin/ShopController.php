@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\DB;
 
 class ShopController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $shops = Shop::query()
+            ->where('admin_id', $request->user()->id)
             ->orderByDesc('created_at')
             ->get();
         return Inertia::render('Admin/Shop/Index', compact('shops'));

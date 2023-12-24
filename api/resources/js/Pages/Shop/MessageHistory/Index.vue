@@ -4,6 +4,7 @@ import { Head, useForm, usePage } from '@inertiajs/vue3';
 import MessageRender from '@/Components/MessageRender.vue';
 import { onBeforeMount, onMounted, ref, computed } from 'vue';
 import axios from 'axios';
+import flashMessage from '@/Utils/flashMessage';
 
 const props = defineProps({
     messageHistories: {
@@ -23,6 +24,7 @@ const props = defineProps({
         required: false,
     },
 });
+console.log(props)
 const shopId = props.routeParams.parameters.shop.id;
 const page = usePage()
 const user = computed(() => page.props.auth.user)
@@ -71,6 +73,7 @@ const submit = () => {
     }), form )
     .then((response) => {
         console.log('listen')
+        form.body = '';
         window.Echo.channel('message')
             .listen('MessageHistoryCreated', (e) => {
 
@@ -89,6 +92,7 @@ const submit = () => {
             });
     })
     .catch((error) => {
+        flashMessage(error.response.data.errors.body[0], 'error')
         console.log(error);
     });
 };
@@ -124,7 +128,7 @@ const form = useForm({
                 </v-col>
             </v-row>
         </v-sheet>
-        <v-card class="w-50 mx-auto px-5">
+        <v-card class="w-50 mx-auto px-5 mb-3" style="min-height: 500px;">
             <template v-for="(messageHistory, index) in messageHistories" :key="messageHistory.id" elevation="3" class="mb-3">
                 <MessageRender
                     :messageHistory="messageHistory"
@@ -135,7 +139,7 @@ const form = useForm({
         </v-card>
         <v-form @submit.prevent="submit">
             <v-row>
-                <v-col cols="4">
+                <v-col cols="2">
                     <v-list-subheader>新規メッセージ</v-list-subheader>
                 </v-col>
                 <v-col cols="8">

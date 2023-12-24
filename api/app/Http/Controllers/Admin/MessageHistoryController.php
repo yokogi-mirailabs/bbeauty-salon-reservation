@@ -20,7 +20,8 @@ class MessageHistoryController extends Controller
             ->where('shop_id', $shop->getKey())
             ->get()
             ->pluck('user')
-            ->unique();
+            ->unique()
+            ->values();
 
         return Inertia::render('Admin/Shop/MessageHistory/Index', compact('stylists', 'users'));
     }

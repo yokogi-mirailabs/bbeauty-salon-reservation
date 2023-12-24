@@ -32,7 +32,7 @@ const props = defineProps({
         required: false,
     },
     users: {
-        type: Array,
+        type: Object,
         required: false,
     },
     start: {
@@ -48,6 +48,7 @@ const props = defineProps({
         required: true,
     },
 });
+console.log(props)
 const shopId = props.routeParams.parameters.shop;
 console.log(shopId)
 onBeforeMount(() => {
@@ -61,6 +62,7 @@ const form = useForm({
 const start = ref(props.start ?? null);
 const end = ref(props.end ?? null);
 const stylists = ref(props.stylists);
+console.log(stylists.value)
 const users = ref(props.users);
 const labels = computed(() => {
     return props.labels;

@@ -1,10 +1,5 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 defineProps({
@@ -22,6 +17,15 @@ const form = useForm({
     remember: false,
 });
 
+const rules = {
+    email: [
+        value => !!value || 'メールアドレスは必須項目です。',
+    ],
+    password: [
+        value => !!value || 'パスワードは必須項目です。',
+    ],
+}
+
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
@@ -37,58 +41,49 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                />
-
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
-
-            <div class="block mt-4">
-                <label class="flex items-center">
-                    <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
+        <v-sheet class="ma-4 py-6">
+            <v-form @submit.prevent="submit">
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field
+                            v-model="form.email"
+                            label="メールアドレス"
+                            variant="outlined"
+                            :rules="rules.email"
+                            :error-messages="form.errors.email"
+                            required
+                            >
+                        </v-text-field>
+                    </v-col>
+                </v-row>
+                <v-row>
+                    <v-col cols="12">
+                        <v-text-field
+                            v-model="form.password"
+                            label="パスワード"
+                            :rules="rules.password"
+                            :error-messages="form.errors.password"
+                            type="password"
+                            required
+                            variant="outlined"
+                            >
+                        </v-text-field>
+                    </v-col>
+                </v-row>
                 <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
+                    :href="route('register')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                    Forgot your password?
+                    まだアカウントをお持ちでない方はこちら
                 </Link>
-
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Log in
-                </PrimaryButton>
-            </div>
-        </form>
+                <v-btn
+                    color="pink-lighten-5"
+                    type="submit"
+                    class="mt-12"
+                    block
+                    >ログイン
+                </v-btn>
+            </v-form>
+        </v-sheet>
     </GuestLayout>
 </template>
