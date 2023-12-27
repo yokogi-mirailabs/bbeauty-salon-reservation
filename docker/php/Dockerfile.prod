@@ -20,4 +20,6 @@ WORKDIR /var/www/html
 RUN composer install && \
 		php artisan cache:clear && \
 		php artisan config:clear && \
-		chmod -R 777 storage
+		chmod -R 777 storage && \
+        npm install && \
+        npm run build

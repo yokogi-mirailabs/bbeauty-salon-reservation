@@ -6,6 +6,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\MessageHistoryController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\PointCardController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('reviews', ReviewController::class);
         Route::get('/message_histories', [MessageHistoryController::class, 'index'])->name('message_histories.index');
         Route::get('/point_cards', [PointCardController::class, 'index'])->name('point_cards.index');
+        Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     });
 });
 

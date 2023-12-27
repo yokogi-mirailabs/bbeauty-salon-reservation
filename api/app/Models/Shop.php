@@ -27,6 +27,11 @@ class Shop extends Model
         'admin_id' => 'integer',
     ];
 
+    public function admin(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
     public function menus()
     {
         return $this->hasMany(Menu::class);

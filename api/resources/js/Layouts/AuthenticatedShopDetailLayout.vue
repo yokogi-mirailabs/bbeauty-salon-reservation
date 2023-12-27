@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { useForm, router } from '@inertiajs/vue3';
 
 const shopId = ref(sessionStorage.getItem('shopId'));
 console.log(shopId.value);
@@ -35,6 +35,9 @@ const logout = () => {
         },
     });
 }
+const onClickNotification = () => {
+    router.get(route('notifications.index', { shop: shopId.value }));
+}
 </script>
 
 <template>
@@ -43,7 +46,16 @@ const logout = () => {
         <v-app-bar-title>
             Beauty Salon Reservation
         </v-app-bar-title>
+        <v-toolbar-items class="ml-2 hidden-xs-only">
+            <v-btn
+            text
+            @click="onClickNotification"
+            >
+            通知
+            </v-btn>
+        </v-toolbar-items>
         </v-app-bar>
+
 
         <v-navigation-drawer permanent>
             <v-divider></v-divider>
