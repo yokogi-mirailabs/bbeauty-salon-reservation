@@ -12,6 +12,7 @@ use App\Models\Stylist;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Enums\ReservationTimeType;
+use App\Notifications\PaymentNotification;
 
 class ReservationController extends Controller
 {
@@ -79,6 +80,8 @@ class ReservationController extends Controller
                 // $pointCard = $shop->pointCards()->where('user_id', $request->user()->id)->first();
                 $shop->pointCards()->where('user_id', $request->user()->id)->increment('point', 1);
             }
+            $admin = $shop->admin;
+            $admin->notify(new PaymentNotification($request->user()));
             return redirect()->route('reservations.thanks', ['shop' => $shop->getKey()]);
         });
     }
