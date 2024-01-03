@@ -10,6 +10,8 @@ use App\Models\Reservation;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\Stylist;
+use App\Models\Settlement;
+use Illuminate\Support\Carbon;
 
 class ReservationSeeder extends Seeder
 {
@@ -25,7 +27,7 @@ class ReservationSeeder extends Seeder
         Reservation::factory()
             ->for($user)
             ->for($shop)
-            ->afterCreating(function (Reservation $reservation) use ($stylists) {
+            ->afterCreating(function (Reservation $reservation) use ($user) {
                 $menus = Stylist::find($reservation->stylist_id)
                     ->menus()
                     ->inRandomOrder()
@@ -40,6 +42,15 @@ class ReservationSeeder extends Seeder
                             'count' => 1,
                         ]);
                 }
+
+                Settlement::factory()
+                    ->for($reservation)
+                    ->for($user)
+                    ->create([
+                        'payment_date' => Carbon::now(),
+                        'payment_amount' => $menus->sum('price'),
+                        'payment_result' => true,
+                    ]);
             })
             ->createMany([
                 [

@@ -3,7 +3,7 @@ import AuthenticatedShopDetailLayout from '@/Layouts/AuthenticatedShopDetailLayo
 import { STYLIST_POST_TYPE, STYLIST_POST_TYPE_TEXT } from '@/Consts/stylistPostType';
 import FullCalendar from '@/Components/Calendar.vue';
 import { useForm } from '@inertiajs/vue3';
-import { computed, ref, onBeforeMount } from 'vue';
+import { computed, ref, onBeforeMount, onMounted } from 'vue';
 import axios from 'axios';
 import flashMessage from '@/Utils/flashMessage';
 
@@ -12,11 +12,16 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    payjpPublicKey: {
+        type: String,
+        required: true,
+    },
     routeParams: {
         type: Object,
         required: true,
     },
 });
+console.log(props)
 const shopId = props.routeParams.parameters.shop.id;
 console.log(shopId);
 console.log(props.routeParams)
@@ -28,7 +33,8 @@ const form = useForm({
         name: '',
     },
     menus: [],
-    event: null
+    event: null,
+    payjp_token: '',
 });
 const setStylist = (stylist) => {
     axios.get(route('api.reservations.index', {
@@ -60,6 +66,7 @@ const setEvent = (e) => {
     form.event = e.value;
 }
 const confirm = () => {
+    form.payjp_token = document.querySelector('input[name="payjp-token"]').value || '';
     form.post(route('reservations.store', {
         shop: shopId,
     }), {
@@ -76,6 +83,24 @@ const confirm = () => {
 }
 const calendarKey = ref(0);
 const isOpen = ref(false);
+
+const payjpArea = ref(null);
+let script = null;
+
+const insertPayjpScript = () => {
+    script = document.createElement('script');
+    script.src = 'https://checkout.pay.jp/';
+    script.setAttribute('class', 'payjp-button');
+    script.setAttribute('data-partial', true);
+    script.setAttribute('data-key', props.payjpPublicKey);
+    script.setAttribute('data-text', 'クレジットカード情報を入力');
+    script.setAttribute('data-submit-text', '登録');
+    payjpArea.value.appendChild(script);
+}
+
+onMounted(() => {
+    insertPayjpScript();
+});
 </script>
 <template>
     <AuthenticatedShopDetailLayout>
@@ -155,6 +180,7 @@ const isOpen = ref(false);
         <v-sheet>
             計: {{ price }} 円
         </v-sheet>
+        <div ref="payjpArea"></div>
         <v-btn
             @click="isOpen = true"
             color="deep-purple-lighten-2"
