@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'payjp_customer_id',
+        'payjp_current_card_id'
     ];
 
     /**
@@ -57,5 +59,10 @@ class User extends Authenticatable
     public function pointCards()
     {
         return $this->hasMany(PointCard::class);
+    }
+
+    public function settlements()
+    {
+        return $this->hasMany(Settlement::class);
     }
 }

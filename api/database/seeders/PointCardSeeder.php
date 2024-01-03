@@ -20,6 +20,7 @@ class PointCardSeeder extends Seeder
         PointCard::factory()->create([
             'user_id' => $user->id,
             'shop_id' => $shop->id,
+            'point' => 0,
         ]);
     }
 }

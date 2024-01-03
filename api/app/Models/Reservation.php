@@ -50,4 +50,9 @@ class Reservation extends Model
     {
         return $this->hasMany(PaymentHistory::class);
     }
+
+    public function settlements(): HasOne
+    {
+        return $this->hasOne(Settlement::class);
+    }
 }
