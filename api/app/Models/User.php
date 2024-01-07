@@ -23,7 +23,9 @@ class User extends Authenticatable
         'email',
         'password',
         'payjp_customer_id',
-        'payjp_current_card_id'
+        'payjp_current_card_id',
+        'provider_name',
+        'provider_id',
     ];
 
     /**
