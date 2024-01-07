@@ -9,7 +9,14 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\LineLoginController;
 use Illuminate\Support\Facades\Route;
+
+Route::prefix('login/{provider}')->where(['provider' => '(line|github)'])->group(function(){
+
+    Route::get('/', [LineLoginController::class, 'redirectToProvider'])->name('social_login.redirect');
+    Route::get('/callback', [LineLoginController::class, 'handleProviderCallback'])->name('social_login.callback');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])

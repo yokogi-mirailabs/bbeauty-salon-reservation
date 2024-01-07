@@ -1,6 +1,7 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import axios from 'axios';
 
 defineProps({
     canResetPassword: {
@@ -31,6 +32,13 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+const lineLogin = () => {
+    axios.get(route('social_login.redirect', { provider: 'line' }))
+    .then((res) => {
+        window.location.href = res.data.redirect_uri;
+    })
+};
 </script>
 
 <template>
@@ -41,7 +49,7 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <v-sheet class="ma-4 py-6">
+        <v-sheet class="ma-4 pt-6">
             <v-form @submit.prevent="submit">
                 <v-row>
                     <v-col cols="12">
@@ -84,6 +92,22 @@ const submit = () => {
                     >ログイン
                 </v-btn>
             </v-form>
+            <div class="mt-20 text-left">
+                <Link
+                    @click="lineLogin"
+                >
+                    <v-img
+                        max-height="50"
+                        src="/images/line/btn_login_base.png"
+                    ></v-img>
+                </Link>
+                <span class="text-caption">LINEアカウントを利用して会員登録を行います。
+                    ログイン時の認証画面にて許可をいただいた場合のみ、
+                    あなたのLINEアカウントに登録されているメールアドレスを取得します。
+                    取得したメールアドレスは、以下の目的以外では使用しません。<br>
+                    ・通知、問い合わせ時の連絡のために利用
+                    また、法令に定められた場合を除き、第三者への提供はいたしません。</span>
+            </div>
         </v-sheet>
     </GuestLayout>
 </template>
